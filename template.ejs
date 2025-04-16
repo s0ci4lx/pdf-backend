@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <style>
+      body {
+        font-family: "TH SarabunPSK", sans-serif;
+        font-size: 16pt;
+        line-height: 1.6;
+        padding: 40px;
+      }
+    </style>
+  </head>
+  <body>
+    <h2 style="text-align: center">บันทึกการยินยอมใช้หลักทรัพย์</h2>
+
+    <p>ข้าพเจ้า <strong><%= data.name %></strong> อายุ <%= data.age %> ปี</p>
+    <p>อยู่บ้านเลขที่ <%= data.address %></p>
+    <p>
+      ยินยอมให้เจ้าหน้าที่สืบสวน สถานีตำรวจภูธรหาดใหญ่
+      ยึดหลักทรัพย์เพื่อใช้ในการประกันตัว
+    </p>
+
+    <p>รายละเอียดทรัพย์: <%= data.asset %></p>
+    <p>วันที่: <%= data.date %></p>
+  </body>
+</html>
