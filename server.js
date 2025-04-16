@@ -1,5 +1,5 @@
 const express = require("express");
-const puppeteer = require("puppeteer"); // ← ตัวเต็ม
+const puppeteer = require("puppeteer"); // ตัวเต็ม
 const ejs = require("ejs");
 const path = require("path");
 const bodyParser = require("body-parser");
@@ -9,7 +9,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
-  res.send("PDF Generator backend is working");
+  res.send("Backend is working!");
 });
 
 app.post("/generate-pdf", async (req, res) => {
@@ -18,14 +18,14 @@ app.post("/generate-pdf", async (req, res) => {
   const html = await ejs.renderFile(templatePath, { data });
 
   const browser = await puppeteer.launch({
-    args: ["--no-sandbox", "--disable-setuid-sandbox"], // สำคัญสำหรับ Render
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    headless: true,
   });
 
   const page = await browser.newPage();
   await page.setContent(html, { waitUntil: "networkidle0" });
 
   const pdfBuffer = await page.pdf({ format: "A4" });
-
   await browser.close();
 
   res.setHeader("Content-Type", "application/pdf");
