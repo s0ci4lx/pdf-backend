@@ -1,8 +1,6 @@
 const express = require("express");
-const puppeteer = require("puppeteer-core");
-const chromium = require("chrome-aws-lambda");
+const puppeteer = require("puppeteer"); // ← ตัวเต็ม
 const ejs = require("ejs");
-const fs = require("fs");
 const path = require("path");
 const bodyParser = require("body-parser");
 
@@ -10,17 +8,17 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.get("/", (req, res) => {
+  res.send("PDF Generator backend is working");
+});
+
 app.post("/generate-pdf", async (req, res) => {
   const data = req.body;
-
   const templatePath = path.join(__dirname, "template.ejs");
   const html = await ejs.renderFile(templatePath, { data });
 
   const browser = await puppeteer.launch({
-    args: chromium.args,
-    executablePath: await chromium.executablePath,
-    headless: chromium.headless,
-    defaultViewport: chromium.defaultViewport,
+    args: ["--no-sandbox", "--disable-setuid-sandbox"], // สำคัญสำหรับ Render
   });
 
   const page = await browser.newPage();
@@ -33,10 +31,6 @@ app.post("/generate-pdf", async (req, res) => {
   res.setHeader("Content-Type", "application/pdf");
   res.setHeader("Content-Disposition", "attachment; filename=output.pdf");
   res.send(pdfBuffer);
-});
-
-app.get("/", (req, res) => {
-  res.send("PDF Backend is running. Use POST /generate-pdf");
 });
 
 app.listen(3000, () => {
