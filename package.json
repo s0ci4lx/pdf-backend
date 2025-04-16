@@ -2,8 +2,7 @@
   "name": "pdf-backend",
   "version": "1.0.0",
   "scripts": {
-    "start": "node server.js",
-    "postinstall": "npx puppeteer install"
+    "start": "node server.js"
   }
   ,
   "dependencies": {
