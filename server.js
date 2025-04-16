@@ -35,6 +35,10 @@ app.post("/generate-pdf", async (req, res) => {
   res.send(pdfBuffer);
 });
 
+app.get("/", (req, res) => {
+  res.send("PDF Backend is running. Use POST /generate-pdf");
+});
+
 app.listen(3000, () => {
   console.log("PDF server running on http://localhost:3000");
 });
